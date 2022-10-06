@@ -18,6 +18,10 @@ public:
 	
 	void process();
 
+	void switch_state(STATES new_state);
+
+	void initialize_game();
+
 private:
 	STATES current_state = STATES::STATE_SETUP;
 

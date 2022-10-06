@@ -13,6 +13,9 @@ public:
 	bool process();
 	void render_buttons();
 
+	FIELD_SIZE get_field_size();
+	GAME_MODE get_game_mode();
+
 private:
 	FIELD_SIZE field_size = FIELD_SIZE::SIZE_3x3;
 	GAME_MODE game_mode = GAME_MODE::MODE_PvsAI;

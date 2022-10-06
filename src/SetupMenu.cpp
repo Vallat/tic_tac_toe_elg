@@ -74,12 +74,12 @@ bool SetupMenu::process()
 			}
 			mode_buttons[iterator - 1]->get_sprite()->setColor(sf::Color(120, 120, 120));
 		}
+		game_mode = static_cast<GAME_MODE>(button_clicked - 1);
+
 	}
-	game_mode = static_cast<GAME_MODE>(button_clicked);
 
 	if (start_button->is_clicked(mouse_position))
 	{
-		Renderer::get_renderer()->set_field_visuals(FIELD_SIZE::SIZE_3x3);
 		return true;
 	}
 
@@ -102,4 +102,16 @@ void SetupMenu::render_buttons()
 	}
 
 	renderer->window_draw(*start_button->get_sprite());
+}
+
+
+FIELD_SIZE SetupMenu::get_field_size()
+{
+	return field_size;
+}
+
+
+GAME_MODE SetupMenu::get_game_mode()
+{
+	return game_mode;
 }
