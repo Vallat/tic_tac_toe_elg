@@ -31,9 +31,5 @@ public:
 	/// </summary>
 	void window_display();
 
-	void set_field_visuals(FIELD_SIZE field_size);
-
 private:
-	sf::Texture* field_texture;
-	sf::Sprite* field_sprite;
 };

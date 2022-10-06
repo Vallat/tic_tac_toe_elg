@@ -3,8 +3,7 @@
 #include "Human.h"
 #include "AI.h"
 #include "SetupMenu.h"
-#include "Renderer.h"
-
+#include "GameField.h"
 
 StateMachine::StateMachine()
 {
@@ -53,15 +52,9 @@ void StateMachine::switch_state(STATES new_state)
 
 void StateMachine::initialize_game()
 {
-	switch (setup_menu->get_field_size())
-	{
-	case FIELD_SIZE::SIZE_3x3:
-		Renderer::get_renderer()->set_field_visuals(FIELD_SIZE::SIZE_3x3);
-		break;
-	case FIELD_SIZE::SIZE_5x5:
-		Renderer::get_renderer()->set_field_visuals(FIELD_SIZE::SIZE_5x5);
-		break;
-	}
+	GameField* game_field = GameField::get_instance();
+
+	game_field->setup_game_field(setup_menu->get_field_size());
 
 	switch (setup_menu->get_game_mode())
 	{

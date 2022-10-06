@@ -153,6 +153,8 @@
   <ItemGroup>
     <ClCompile Include="src\AI.cpp" />
     <ClCompile Include="src\Button.cpp" />
+    <ClCompile Include="src\FieldCell.cpp" />
+    <ClCompile Include="src\GameField.cpp" />
     <ClCompile Include="src\Human.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -163,6 +165,8 @@
   <ItemGroup>
     <ClInclude Include="include\AI.h" />
     <ClInclude Include="include\Button.h" />
+    <ClInclude Include="include\FieldCell.h" />
+    <ClInclude Include="include\GameField.h" />
     <ClInclude Include="include\Globals.h" />
     <ClInclude Include="include\Human.h" />
     <ClInclude Include="include\Player.h" />
