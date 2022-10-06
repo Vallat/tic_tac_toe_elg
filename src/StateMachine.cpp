@@ -6,6 +6,7 @@
 #include "GameField.h"
 #include "FieldCell.h"
 #include <thread>
+#include <iostream>
 
 StateMachine::StateMachine()
 {
@@ -30,13 +31,27 @@ void StateMachine::process()
 	case STATES::STATE_PLAYER1_TURN:
 		if (player_one->do_action(CELL_TYPE::CELL_CROSS))
 		{
-			switch_state(STATES::STATE_PLAYER2_TURN);
+			if (GameField::get_instance()->check_for_win_condition(CELL_TYPE::CELL_CROSS))
+			{
+				switch_state(STATES::STATE_RESULT_DISPLAY);
+			}
+			else
+			{
+				switch_state(STATES::STATE_PLAYER2_TURN);
+			}
 		}
 		break;
 	case STATES::STATE_PLAYER2_TURN:
 		if (player_two->do_action(CELL_TYPE::CELL_ZERO))
 		{
-			switch_state(STATES::STATE_PLAYER1_TURN);
+			if (GameField::get_instance()->check_for_win_condition(CELL_TYPE::CELL_ZERO))
+			{
+				switch_state(STATES::STATE_RESULT_DISPLAY);
+			}
+			else
+			{
+				switch_state(STATES::STATE_PLAYER1_TURN);
+			}
 		}
 		break;
 	case STATES::STATE_RESULT_DISPLAY:

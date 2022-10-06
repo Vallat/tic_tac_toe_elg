@@ -23,6 +23,8 @@ public:
 	
 	sf::Sprite* get_sprite();
 
+	sf::Vector2f get_cell_pos();
+
 	void update_visuals();
 
 	bool is_hovered(sf::Vector2f mouse_position);

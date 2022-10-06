@@ -25,6 +25,8 @@ public:
 
 	bool try_to_fill_cell(sf::Vector2f mouse_position, CELL_TYPE cell_type);
 
+	bool check_for_win_condition(CELL_TYPE win_type);
+
 private:
 	FIELD_SIZE field_size = FIELD_SIZE::SIZE_3x3;
 
@@ -32,4 +34,6 @@ private:
 	sf::Sprite* field_sprite;
 
 	std::vector<FieldCell*> field_cells_array;
+
+	FieldCell* last_filled_cell;
 };

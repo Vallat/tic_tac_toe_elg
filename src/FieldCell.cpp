@@ -26,6 +26,12 @@ sf::Sprite* FieldCell::get_sprite()
 }
 
 
+sf::Vector2f FieldCell::get_cell_pos()
+{
+	return cell_pos;
+}
+
+
 void FieldCell::update_visuals()
 {
 	const std::string texture_path = (current_type == CELL_TYPE::CELL_CROSS) ? CROSS_IMAGE_PATH : ZERO_IMAGE_PATH;
