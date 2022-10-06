@@ -9,6 +9,8 @@ int main()
 
 	StateMachine* state_machine = new StateMachine;
 
+	renderer->get_window()->setFramerateLimit(30);
+
 	while (renderer->get_window()->isOpen())
 	{
 		sf::Event event;

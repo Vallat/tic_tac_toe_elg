@@ -1,6 +1,7 @@
 #include "GameField.h"
 #include "Renderer.h"
 #include "FieldCell.h"
+#include <iostream>
 
 
 GameField* GameField::game_field_ = nullptr;
@@ -70,11 +71,15 @@ void GameField::send_render_information()
 
 	Renderer::get_renderer()->window_draw(*field_sprite_);
 
-	size_t array_len = (field_size == FIELD_SIZE::SIZE_3x3) ? 9 : 25;
-	for (size_t iterator = 0; iterator < array_len; iterator++)
+	for (size_t iterator = 0; iterator < field_cells_array.size(); iterator++)
 	{
 		FieldCell* field_cell = field_cells_array[iterator];
-		Renderer::get_renderer()->window_draw(*field_cell->get_sprite());
+		sf::Sprite* field_cell_sprite = field_cell->get_sprite();
+		if (field_cell_sprite == nullptr)
+		{
+			continue;
+		}
+		Renderer::get_renderer()->window_draw(*field_cell_sprite);
 	}
 
 }
@@ -83,4 +88,24 @@ void GameField::send_render_information()
 sf::Sprite* GameField::get_field_sprite()
 {
 	return field_sprite;
+}
+
+
+bool GameField::try_to_fill_cell(sf::Vector2f mouse_position, CELL_TYPE cell_type)
+{
+	for (size_t iterator = 0; iterator < field_cells_array.size(); iterator++)
+	{
+		FieldCell* field_cell = field_cells_array[iterator];
+		if (!field_cell->is_hovered(mouse_position))
+		{
+			continue;
+		}
+		if (field_cell->is_empty())
+		{
+			field_cell->set_current_type(cell_type);
+			field_cell->update_visuals();
+			return true;
+		}
+	}
+	return false;
 }

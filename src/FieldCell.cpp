@@ -46,3 +46,37 @@ void FieldCell::update_visuals()
 	);
 	sprite = new_sprite;
 }
+
+
+bool FieldCell::is_hovered(sf::Vector2f mouse_position)
+{
+	sf::Sprite* current_sprite = get_sprite();
+	sf::FloatRect float_rect;
+	if (current_sprite == nullptr)
+	{
+		float_rect = sf::FloatRect(
+			(
+			sf::Vector2f(
+				cell_pos.x * CELL_SIZE_PIXELS + ((cell_pos.x > 0) ? cell_pos.x * PARTING_LINE_SIZE_PIXELS : 0),
+				cell_pos.y * CELL_SIZE_PIXELS + ((cell_pos.y > 0) ? cell_pos.y * PARTING_LINE_SIZE_PIXELS : 0)
+			) + screen_offset
+			),
+			sf::Vector2f(
+				CELL_SIZE_PIXELS,
+				CELL_SIZE_PIXELS
+			)
+		);
+	}
+	else
+	{
+		float_rect = current_sprite->getGlobalBounds();
+
+	}
+	return float_rect.contains(mouse_position);
+}
+
+
+bool FieldCell::is_empty()
+{
+	return get_current_type() == CELL_TYPE::CELL_EMPTY;
+}

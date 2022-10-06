@@ -25,6 +25,10 @@ public:
 
 	void update_visuals();
 
+	bool is_hovered(sf::Vector2f mouse_position);
+
+	bool is_empty();
+
 private:
 	sf::Vector2f cell_pos;
 	sf::Vector2f screen_offset;

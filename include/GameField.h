@@ -4,6 +4,7 @@
 #include "Globals.h"
 
 class FieldCell;
+enum class CELL_TYPE;
 
 class GameField
 {
@@ -21,6 +22,8 @@ public:
 	void send_render_information();
 
 	sf::Sprite* get_field_sprite();
+
+	bool try_to_fill_cell(sf::Vector2f mouse_position, CELL_TYPE cell_type);
 
 private:
 	FIELD_SIZE field_size = FIELD_SIZE::SIZE_3x3;

@@ -4,6 +4,8 @@
 #include "AI.h"
 #include "SetupMenu.h"
 #include "GameField.h"
+#include "FieldCell.h"
+#include <thread>
 
 StateMachine::StateMachine()
 {
@@ -22,16 +24,17 @@ void StateMachine::process()
 		{
 			initialize_game();
 			switch_state(STATES::STATE_PLAYER1_TURN);
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		}
 		break;
 	case STATES::STATE_PLAYER1_TURN:
-		if (player_one->do_action())
+		if (player_one->do_action(CELL_TYPE::CELL_CROSS))
 		{
 			switch_state(STATES::STATE_PLAYER2_TURN);
 		}
 		break;
 	case STATES::STATE_PLAYER2_TURN:
-		if (player_two->do_action())
+		if (player_two->do_action(CELL_TYPE::CELL_ZERO))
 		{
 			switch_state(STATES::STATE_PLAYER1_TURN);
 		}

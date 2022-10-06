@@ -5,6 +5,6 @@ class Human :
 {
 public:
     Human();
-    bool do_action() override;
+    bool do_action(CELL_TYPE player_cell_type) override;
 };
 
