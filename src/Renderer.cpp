@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include "Globals.h"
 #include "GameField.h"
+#include "ResultDisplay.h"
 
 Renderer* Renderer::renderer_ = nullptr;
 
@@ -55,6 +56,9 @@ void Renderer::window_display()
 {
 	GameField* game_field = GameField::get_instance();
 	game_field->send_render_information();
+
+	ResultDisplay* result_display = ResultDisplay::get_instance();
+	result_display->send_render_information();
 
 	sf::RenderWindow* game_window = get_window();
 	game_window->display();

@@ -32,6 +32,15 @@ void GameField::setup_game_field(FIELD_SIZE field_size_)
 	size_t line_size = (field_size == FIELD_SIZE::SIZE_3x3) ? 3 : 5;
 	size_t array_len = line_size * line_size;
 
+	if (field_cells_array.size() == array_len)
+	{
+		return;
+	}
+	else
+	{
+		field_cells_array.clear();
+	}
+
 	sf::Vector2f screen_offset = sf::Vector2f((WINDOW_WIDTH - get_field_sprite()->getGlobalBounds().width) / 2.0f, (WINDOW_HEIGHT - get_field_sprite()->getGlobalBounds().height) / 2.0f);
 	for (size_t y = 0; y < line_size; y++)
 	{
@@ -132,16 +141,28 @@ bool GameField::check_for_win_condition(CELL_TYPE win_type)
 
 
 	// if there are no horizontal and vertical win conditions - check diagonals
-	bool win_condition_diag_main = false, win_condition_diag_add = false;
 	if (!(win_condition_horiz || win_condition_vert))
 	{
-		win_condition_diag_main = win_condition_diag_add = true;
+		bool win_condition_diag_main = true, win_condition_diag_add = true;
 		for (size_t i = 0; i < line_len; i++)
 		{
 			win_condition_diag_main &= (field_cells_array[i + i * line_len]->get_current_type() == win_type);
 			win_condition_diag_add &= (field_cells_array[line_len - i - 1 + i * line_len]->get_current_type() == win_type);
 		}
+		return win_condition_diag_main || win_condition_diag_add;
 	}
 
-	return win_condition_vert || win_condition_horiz || win_condition_diag_main || win_condition_diag_add;
+	return win_condition_vert || win_condition_horiz;
+}
+
+
+void GameField::clear_field()
+{
+	for (size_t iterator = 0; iterator < field_cells_array.size(); iterator++)
+	{
+		FieldCell* field_cell = field_cells_array[iterator];
+		field_cell->set_current_type(CELL_TYPE::CELL_EMPTY);
+		field_cell->update_visuals();
+	}
+	field_sprite = nullptr;
 }

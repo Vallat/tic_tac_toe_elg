@@ -4,6 +4,7 @@
 #include "AI.h"
 #include "SetupMenu.h"
 #include "GameField.h"
+#include "ResultDisplay.h"
 #include "FieldCell.h"
 #include <thread>
 #include <iostream>
@@ -33,6 +34,7 @@ void StateMachine::process()
 		{
 			if (GameField::get_instance()->check_for_win_condition(CELL_TYPE::CELL_CROSS))
 			{
+				ResultDisplay::get_instance()->set_up_win_result(WIN_RESULT::CROSS_WIN);
 				switch_state(STATES::STATE_RESULT_DISPLAY);
 			}
 			else
@@ -46,6 +48,7 @@ void StateMachine::process()
 		{
 			if (GameField::get_instance()->check_for_win_condition(CELL_TYPE::CELL_ZERO))
 			{
+				ResultDisplay::get_instance()->set_up_win_result(WIN_RESULT::ZERO_WIN);
 				switch_state(STATES::STATE_RESULT_DISPLAY);
 			}
 			else
@@ -55,6 +58,11 @@ void StateMachine::process()
 		}
 		break;
 	case STATES::STATE_RESULT_DISPLAY:
+		if (!ResultDisplay::get_instance()->process())
+		{
+			GameField::get_instance()->clear_field();
+			switch_state(STATES::STATE_SETUP);
+		}
 		break;
 	default:
 		break;

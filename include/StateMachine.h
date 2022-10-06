@@ -2,6 +2,7 @@
 
 class SetupMenu;
 class Player;
+class ResultDisplay;
 
 enum class STATES
 {

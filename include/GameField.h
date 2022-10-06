@@ -27,6 +27,8 @@ public:
 
 	bool check_for_win_condition(CELL_TYPE win_type);
 
+	void clear_field();
+
 private:
 	FIELD_SIZE field_size = FIELD_SIZE::SIZE_3x3;
 
