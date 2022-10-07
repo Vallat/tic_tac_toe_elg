@@ -34,6 +34,11 @@ sf::Vector2f FieldCell::get_cell_pos()
 
 void FieldCell::update_visuals()
 {
+	if (current_type == CELL_TYPE::CELL_EMPTY)
+	{
+		sprite = nullptr;
+		return;
+	}
 	const std::string texture_path = (current_type == CELL_TYPE::CELL_CROSS) ? CROSS_IMAGE_PATH : ZERO_IMAGE_PATH;
 	sf::Texture* new_texture = new sf::Texture();
 	if (!new_texture->loadFromFile(texture_path))
