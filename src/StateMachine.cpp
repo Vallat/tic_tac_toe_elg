@@ -32,7 +32,12 @@ void StateMachine::process()
 	case STATES::STATE_PLAYER1_TURN:
 		if (player_one->do_action(CELL_TYPE::CELL_CROSS))
 		{
-			if (GameField::get_instance()->check_for_win_condition(CELL_TYPE::CELL_CROSS))
+			if (GameField::get_instance()->check_for_draft())
+			{
+				ResultDisplay::get_instance()->set_up_win_result(WIN_RESULT::DRAFT);
+				switch_state(STATES::STATE_RESULT_DISPLAY);
+			}
+			else if (GameField::get_instance()->check_for_win_condition(CELL_TYPE::CELL_CROSS))
 			{
 				ResultDisplay::get_instance()->set_up_win_result(WIN_RESULT::CROSS_WIN);
 				switch_state(STATES::STATE_RESULT_DISPLAY);
@@ -46,7 +51,12 @@ void StateMachine::process()
 	case STATES::STATE_PLAYER2_TURN:
 		if (player_two->do_action(CELL_TYPE::CELL_ZERO))
 		{
-			if (GameField::get_instance()->check_for_win_condition(CELL_TYPE::CELL_ZERO))
+			if (GameField::get_instance()->check_for_draft())
+			{
+				ResultDisplay::get_instance()->set_up_win_result(WIN_RESULT::DRAFT);
+				switch_state(STATES::STATE_RESULT_DISPLAY);
+			}
+			else if (GameField::get_instance()->check_for_win_condition(CELL_TYPE::CELL_ZERO))
 			{
 				ResultDisplay::get_instance()->set_up_win_result(WIN_RESULT::ZERO_WIN);
 				switch_state(STATES::STATE_RESULT_DISPLAY);
@@ -81,6 +91,7 @@ void StateMachine::initialize_game()
 	GameField* game_field = GameField::get_instance();
 
 	game_field->setup_game_field(setup_menu->get_field_size());
+	size_t line_len = (game_field->get_field_size() == FIELD_SIZE::SIZE_3x3) ? 3 : 5;
 
 	switch (setup_menu->get_game_mode())
 	{
@@ -90,11 +101,11 @@ void StateMachine::initialize_game()
 		break;
 	case GAME_MODE::MODE_PvsAI:
 		player_one = new Human;
-		player_two = new AI;
+		player_two = new AI(game_field->get_field_size());
 		break;
 	case GAME_MODE::MODE_AIvsAI:
-		player_one = new AI;
-		player_two = new AI;
+		player_one = new AI(game_field->get_field_size());
+		player_two = new AI(game_field->get_field_size());
 		break;
 	}
 }

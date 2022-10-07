@@ -101,6 +101,12 @@ sf::Sprite* GameField::get_field_sprite()
 }
 
 
+FIELD_SIZE GameField::get_field_size()
+{
+	return field_size;
+}
+
+
 bool GameField::try_to_fill_cell(sf::Vector2f mouse_position, CELL_TYPE cell_type)
 {
 	for (size_t iterator = 0; iterator < field_cells_array.size(); iterator++)
@@ -119,6 +125,19 @@ bool GameField::try_to_fill_cell(sf::Vector2f mouse_position, CELL_TYPE cell_typ
 		}
 	}
 	return false;
+}
+
+
+bool GameField::try_to_fill_cell(FieldCell* cell_to_fill, CELL_TYPE cell_type)
+{
+	if (!cell_to_fill->is_empty())
+	{
+		return false;
+	}
+	cell_to_fill->set_current_type(cell_type);
+	cell_to_fill->update_visuals();
+	last_filled_cell = cell_to_fill;
+	return true;
 }
 
 
@@ -156,6 +175,22 @@ bool GameField::check_for_win_condition(CELL_TYPE win_type)
 }
 
 
+bool GameField::check_for_draft()
+{
+	bool in_draft = true;
+	for (size_t iterator = 0; iterator < field_cells_array.size(); iterator++)
+	{
+		FieldCell* field_cell = field_cells_array[iterator];
+		if (field_cell->get_current_type() == CELL_TYPE::CELL_EMPTY)
+		{
+			in_draft = false;
+			break;
+		}
+	}
+	return in_draft;
+}
+
+
 void GameField::clear_field()
 {
 	for (size_t iterator = 0; iterator < field_cells_array.size(); iterator++)
@@ -165,4 +200,10 @@ void GameField::clear_field()
 		field_cell->update_visuals();
 	}
 	field_sprite = nullptr;
+}
+
+
+std::vector<FieldCell*> GameField::get_field_cells_array()
+{
+	return field_cells_array;
 }

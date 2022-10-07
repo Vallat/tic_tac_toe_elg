@@ -23,11 +23,18 @@ public:
 
 	sf::Sprite* get_field_sprite();
 
+	FIELD_SIZE get_field_size();
+
 	bool try_to_fill_cell(sf::Vector2f mouse_position, CELL_TYPE cell_type);
+	bool try_to_fill_cell(FieldCell* cell_to_fill, CELL_TYPE cell_type);
 
 	bool check_for_win_condition(CELL_TYPE win_type);
 
+	bool check_for_draft();
+
 	void clear_field();
+
+	std::vector<FieldCell*> get_field_cells_array();
 
 private:
 	FIELD_SIZE field_size = FIELD_SIZE::SIZE_3x3;
