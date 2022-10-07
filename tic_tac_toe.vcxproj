@@ -159,6 +159,7 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ResultDisplay.cpp" />
     <ClCompile Include="src\SetupMenu.cpp" />
     <ClCompile Include="src\StateMachine.cpp" />
   </ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="include\Human.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Renderer.h" />
+    <ClInclude Include="include\ResultDisplay.h" />
     <ClInclude Include="include\SetupMenu.h" />
     <ClInclude Include="include\StateMachine.h" />
   </ItemGroup>
