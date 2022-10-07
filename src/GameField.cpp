@@ -200,10 +200,17 @@ void GameField::clear_field()
 		field_cell->update_visuals();
 	}
 	field_sprite = nullptr;
+	last_filled_cell = nullptr;
 }
 
 
 std::vector<FieldCell*> GameField::get_field_cells_array()
 {
 	return field_cells_array;
+}
+
+
+FieldCell* GameField::get_last_filled_cell()
+{
+	return last_filled_cell;
 }

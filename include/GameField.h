@@ -36,6 +36,8 @@ public:
 
 	std::vector<FieldCell*> get_field_cells_array();
 
+	FieldCell* get_last_filled_cell();
+
 private:
 	FIELD_SIZE field_size = FIELD_SIZE::SIZE_3x3;
 
