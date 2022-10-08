@@ -6,6 +6,10 @@
 const std::string CROSS_IMAGE_PATH = "resources/cross.png";
 const std::string ZERO_IMAGE_PATH = "resources/zero.png";
 
+
+/// <summary>
+/// Cell can have three types that used both for displaying and gameplay purposes
+/// </summary>
 enum class CELL_TYPE
 {
 	CELL_EMPTY,
@@ -31,8 +35,17 @@ public:
 
 	bool is_empty();
 
+	sf::Vector2f get_cell_center_pos();
+
 private:
+	/// <summary>
+	/// Cell position on the screen without offset
+	/// </summary>
 	sf::Vector2f cell_pos;
+
+	/// <summary>
+	/// Offset to the cell_pos that is relative to the distance from the screen edge to the game field
+	/// </summary>
 	sf::Vector2f screen_offset;
 
 	sf::Texture* texture = nullptr;

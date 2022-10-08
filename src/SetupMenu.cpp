@@ -39,24 +39,32 @@ SetupMenu::SetupMenu()
 
 bool SetupMenu::process()
 {
+	render_buttons();
+
+	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		return false;
+	}
 	sf::Vector2f mouse_position(sf::Mouse::getPosition(*Renderer::get_renderer()->get_window()));
-	if (size_buttons[0]->is_clicked(mouse_position))
+	if (size_buttons[0]->is_hovered(mouse_position))
 	{
 		size_buttons[0]->get_sprite()->setColor(sf::Color(255, 255, 255));
 		size_buttons[1]->get_sprite()->setColor(sf::Color(120, 120, 120));
 		field_size = FIELD_SIZE::SIZE_3x3;
+		return false;
 	}
-	else if (size_buttons[1]->is_clicked(mouse_position))
+	else if (size_buttons[1]->is_hovered(mouse_position))
 	{
 		size_buttons[0]->get_sprite()->setColor(sf::Color(120, 120, 120));
 		size_buttons[1]->get_sprite()->setColor(sf::Color(255, 255, 255));
 		field_size = FIELD_SIZE::SIZE_5x5;
+		return false;
 	}
 
 	size_t button_clicked = 0;
 	for (size_t iterator = 0; iterator < 3; iterator++)
 	{
-		if (!mode_buttons[iterator]->is_clicked(mouse_position))
+		if (!mode_buttons[iterator]->is_hovered(mouse_position))
 		{
 			continue;
 		}
@@ -75,15 +83,14 @@ bool SetupMenu::process()
 			mode_buttons[iterator - 1]->get_sprite()->setColor(sf::Color(120, 120, 120));
 		}
 		game_mode = static_cast<GAME_MODE>(button_clicked - 1);
-
+		return false;
 	}
 
-	if (start_button->is_clicked(mouse_position))
+	if (start_button->is_hovered(mouse_position))
 	{
 		return true;
 	}
 
-	render_buttons();
 	return false;
 }
 

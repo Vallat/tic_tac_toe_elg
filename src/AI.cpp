@@ -61,13 +61,13 @@ bool AI::do_action(CELL_TYPE player_cell_type)
 	field_line max_defence_weight_line = get_max_weight_line(defence_lines, opponent_cell_type);
 
 	field_line line_to_put_cell;
-	if (max_attack_weight_line.value == max_defence_weight_line.value && max_attack_weight_line.value == 0)
+	if (max_attack_weight_line.weight == max_defence_weight_line.weight && max_attack_weight_line.weight == 0)
 	{
 		line_to_put_cell = get_available_line(attack_lines);
 	}
 	else
 	{
-		line_to_put_cell = (max_attack_weight_line.value > max_defence_weight_line.value * 0.95) ? max_attack_weight_line : max_defence_weight_line;
+		line_to_put_cell = (max_attack_weight_line.weight > max_defence_weight_line.weight * 0.95) ? max_attack_weight_line : max_defence_weight_line;
 	}
 
 	std::vector<FieldCell*> empty_cells;
@@ -121,7 +121,7 @@ field_line AI::get_max_weight_line(std::vector<field_line>lines_array, CELL_TYPE
 			if (sanitized_line == holder->pattern && holder->weight > max_value)
 			{
 				max_value = holder->weight;
-				line.value = max_value;
+				line.weight = max_value;
 				max_weight_line = line;
 			}
 		}

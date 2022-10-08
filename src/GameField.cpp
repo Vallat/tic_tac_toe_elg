@@ -1,7 +1,7 @@
 #include "GameField.h"
 #include "Renderer.h"
 #include "FieldCell.h"
-#include <iostream>
+#include "ResultDisplay.h"
 
 
 GameField* GameField::game_field_ = nullptr;
@@ -150,12 +150,15 @@ bool GameField::check_for_win_condition(CELL_TYPE win_type)
 	size_t last_filled_y = last_filled_cell->get_cell_pos().y;
 
 	bool win_condition_horiz = true, win_condition_vert = true;
+	std::vector<FieldCell*> win_line_horiz, win_line_vert;
 	for (size_t i = 0; i < line_len; i++)
 	{
 		// check for vertical line
 		win_condition_vert &= (field_cells_array[last_filled_x + (i * line_len)]->get_current_type() == win_type);
+		win_line_vert.push_back(field_cells_array[last_filled_x + (i * line_len)]);
 		// check for horizontal line
 		win_condition_horiz &= (field_cells_array[i + (last_filled_y * line_len)]->get_current_type() == win_type);
+		win_line_horiz.push_back(field_cells_array[i + (last_filled_y * line_len)]);
 	}
 
 
@@ -163,15 +166,28 @@ bool GameField::check_for_win_condition(CELL_TYPE win_type)
 	if (!(win_condition_horiz || win_condition_vert))
 	{
 		bool win_condition_diag_main = true, win_condition_diag_add = true;
+		std::vector<FieldCell*> win_line_diag_main, win_line_diag_add;
 		for (size_t i = 0; i < line_len; i++)
 		{
+			//check for main diagonal
 			win_condition_diag_main &= (field_cells_array[i + i * line_len]->get_current_type() == win_type);
+			win_line_diag_main.push_back(field_cells_array[i + i * line_len]);
+			//check for additional diagonal
 			win_condition_diag_add &= (field_cells_array[line_len - i - 1 + i * line_len]->get_current_type() == win_type);
+			win_line_diag_add.push_back(field_cells_array[line_len - i - 1 + i * line_len]);
 		}
-		return win_condition_diag_main || win_condition_diag_add;
+		if (win_condition_diag_main || win_condition_diag_add)
+		{
+			ResultDisplay::get_instance()->draw_win_line(win_condition_diag_main ? win_line_diag_main : win_line_diag_add);
+			return true;
+		}
 	}
-
-	return win_condition_vert || win_condition_horiz;
+	if (win_condition_vert || win_condition_horiz)
+	{
+		ResultDisplay::get_instance()->draw_win_line(win_condition_horiz ? win_line_horiz : win_line_vert);
+		return true;
+	}
+	return false;
 }
 
 
@@ -201,6 +217,7 @@ void GameField::clear_field()
 	}
 	field_sprite = nullptr;
 	last_filled_cell = nullptr;
+	ResultDisplay::get_instance()->clear_win_line();
 }
 
 

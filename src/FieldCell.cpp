@@ -91,3 +91,9 @@ bool FieldCell::is_empty()
 {
 	return get_current_type() == CELL_TYPE::CELL_EMPTY;
 }
+
+
+sf::Vector2f FieldCell::get_cell_center_pos()
+{
+	return get_sprite()->getPosition() + sf::Vector2f(get_sprite()->getGlobalBounds().width / 2, get_sprite()->getGlobalBounds().height / 2);
+}

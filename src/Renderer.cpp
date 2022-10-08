@@ -44,11 +44,16 @@ void Renderer::window_draw(sf::Sprite sprite_to_draw)
 	game_window->draw(sprite_to_draw);
 }
 
-
 void Renderer::window_draw(sf::Text text_to_draw)
 {
 	sf::RenderWindow* game_window = get_window();
 	game_window->draw(text_to_draw);
+}
+
+void Renderer::window_draw(sf::RectangleShape shape_to_draw)
+{
+	sf::RenderWindow* game_window = get_window();
+	game_window->draw(shape_to_draw);
 }
 
 

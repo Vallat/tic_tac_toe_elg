@@ -10,7 +10,15 @@ class SetupMenu
 public:
 	SetupMenu();
 
+	/// <summary>
+	/// Scans user mouse input to handle buttons pressing and change game settings
+	/// </summary>
+	/// <returns>true if "Start" button was pressed</returns>
 	bool process();
+
+	/// <summary>
+	/// Renderes all buttons
+	/// </summary>
 	void render_buttons();
 
 	FIELD_SIZE get_field_size();

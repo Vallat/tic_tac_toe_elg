@@ -20,6 +20,7 @@ const unsigned int WINDOW_WIDTH = 700;
 
 const unsigned int CELL_SIZE_PIXELS = 128;
 const unsigned int PARTING_LINE_SIZE_PIXELS = 8;
+const unsigned int WIN_LINE_THICKNESS = 10;
 const float SECONDS_TO_DISPLAY_RESULT = 5.0f;
 
 const sf::Vector2f ICONS_SCALE = sf::Vector2f(1.0f, 1.0f);
