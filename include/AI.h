@@ -36,13 +36,13 @@ public:
     /// Scans for all vertical and horizontal lines on the game field
     /// </summary>
     /// <returns>vector of lines structure</returns>
-    std::vector<field_line> scan_for_lines(size_t line_len, std::vector<FieldCell*>& field_cells_array, CELL_TYPE player_cell_type);
+    std::vector<field_line> scan_for_lines(size_t line_len, std::vector<FieldCell*>& field_cells_array);
 
     /// <summary>
     /// Scans for two diagonal lines on the game field
     /// </summary>
     /// <returns>vector of lines structure</returns>
-    std::vector<field_line> scan_for_dioganal_lines(size_t line_len, std::vector<FieldCell*>& field_cells_array, CELL_TYPE player_cell_type);
+    std::vector<field_line> scan_for_dioganal_lines(size_t line_len, std::vector<FieldCell*>& field_cells_array);
 
     /// <summary>
     /// Scans for the line with max weight based on AI patterns

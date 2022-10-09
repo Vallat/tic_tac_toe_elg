@@ -42,28 +42,30 @@ bool AI::do_action(CELL_TYPE player_cell_type)
 		FieldCell* field_cell = field_cells_array[(line_len * line_len - 1) / 2];
 		return GameField::get_instance()->try_to_fill_cell(field_cell, player_cell_type);
 	}
-
-	std::vector<field_line> attack_lines = scan_for_lines(line_len, field_cells_array, player_cell_type);
-	std::vector<field_line> attack_diagonal_lines = scan_for_dioganal_lines(line_len, field_cells_array, player_cell_type);
-	for (size_t i = 0; i < attack_diagonal_lines.size(); i++)
+	else
 	{
-		attack_lines.insert(attack_lines.begin(), attack_diagonal_lines[i]);
+		FieldCell* field_cell = field_cells_array[(line_len * line_len - 1) / 2];
+		if (field_cell->get_current_type() == CELL_TYPE::CELL_EMPTY)
+		{
+			return GameField::get_instance()->try_to_fill_cell(field_cell, player_cell_type);
+		}
 	}
-	field_line max_attack_weight_line = get_max_weight_line(attack_lines, player_cell_type);
+
+	std::vector<field_line> field_lines = scan_for_lines(line_len, field_cells_array);
+	std::vector<field_line> field_diagonal_lines = scan_for_dioganal_lines(line_len, field_cells_array);
+	for (size_t i = 0; i < field_diagonal_lines.size(); i++)
+	{
+		field_lines.insert(field_lines.begin(), field_diagonal_lines[i]);
+	}
+	field_line max_attack_weight_line = get_max_weight_line(field_lines, player_cell_type);
 
 	CELL_TYPE opponent_cell_type = (player_cell_type == CELL_TYPE::CELL_CROSS) ? CELL_TYPE::CELL_ZERO : CELL_TYPE::CELL_CROSS;
-	std::vector<field_line> defence_lines = scan_for_lines(line_len, field_cells_array, opponent_cell_type);
-	std::vector<field_line> defence_diagonal_lines = scan_for_dioganal_lines(line_len, field_cells_array, opponent_cell_type);
-	for (size_t i = 0; i < defence_diagonal_lines.size(); i++)
-	{
-		defence_lines.insert(defence_lines.begin(), defence_diagonal_lines[i]);
-	}
-	field_line max_defence_weight_line = get_max_weight_line(defence_lines, opponent_cell_type);
+	field_line max_defence_weight_line = get_max_weight_line(field_lines, opponent_cell_type);
 
 	field_line line_to_put_cell;
 	if (max_attack_weight_line.weight == max_defence_weight_line.weight && max_attack_weight_line.weight == 0)
 	{
-		line_to_put_cell = get_available_line(attack_lines);
+		line_to_put_cell = get_available_line(field_lines);
 	}
 	else
 	{
@@ -112,6 +114,16 @@ field_line AI::get_max_weight_line(std::vector<field_line>lines_array, CELL_TYPE
 			{
 				sanitized_line.push_back(true);
 			}
+			else
+			{
+				sanitized_line.clear();
+				break;
+			}
+		}
+
+		if (!sanitized_line.size())
+		{
+			continue;
 		}
 
 		for (size_t pattern_num = 0; pattern_num < ai_patterns.size(); pattern_num++)
@@ -154,7 +166,7 @@ field_line AI::get_available_line(std::vector<field_line> lines_array)
 }
 
 
-std::vector<field_line> AI::scan_for_lines(size_t line_len, std::vector<FieldCell*>&field_cells_array, CELL_TYPE player_cell_type)
+std::vector<field_line> AI::scan_for_lines(size_t line_len, std::vector<FieldCell*>&field_cells_array)
 {
 	std::vector<field_line> lines_array;
 	for (size_t y = 0; y < line_len; y++)
@@ -178,7 +190,7 @@ std::vector<field_line> AI::scan_for_lines(size_t line_len, std::vector<FieldCel
 }
 
 
-std::vector<field_line> AI::scan_for_dioganal_lines(size_t line_len, std::vector<FieldCell*>& field_cells_array, CELL_TYPE player_cell_type)
+std::vector<field_line> AI::scan_for_dioganal_lines(size_t line_len, std::vector<FieldCell*>& field_cells_array)
 {
 	std::vector<field_line> diagonal_lines;
 	field_line line_to_right;
