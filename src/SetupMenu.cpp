@@ -88,6 +88,7 @@ bool SetupMenu::process()
 
 	if (start_button->is_hovered(mouse_position))
 	{
+		Renderer::get_renderer()->window_clear();
 		return true;
 	}
 
