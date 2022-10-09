@@ -52,7 +52,7 @@ void ResultDisplay::send_render_information()
 	}
 	if (win_line != nullptr)
 	{
-		Renderer::get_renderer()->window_draw(*win_line);
+		Renderer::get_renderer()->window_draw(win_line);
 	}
 	Renderer::get_renderer()->window_draw(*displayed_text);
 }
@@ -84,15 +84,15 @@ void ResultDisplay::draw_win_line(std::vector<FieldCell*> win_line_)
 	sf::Vector2f line_start = win_line_[0]->get_cell_center_pos();
 	sf::Vector2f line_end = win_line_[win_line_.size() - 1]->get_cell_center_pos();
 
-	sf::RectangleShape* line = new sf::RectangleShape(sf::Vector2f(line_start.x - line_end.x + WIN_LINE_THICKNESS, line_start.y - line_end.y + WIN_LINE_THICKNESS));
-	line->setPosition(sf::Vector2f(line_end.x - WIN_LINE_THICKNESS / 2, line_end.y - WIN_LINE_THICKNESS / 2));
-	line->setFillColor(sf::Color(80, 80, 240));
-	line->setOutlineThickness(WIN_LINE_THICKNESS / 5);
-	line->setOutlineColor(sf::Color(40, 40, 200));
-	win_line = line;
+	win_line[0].position = sf::Vector2f(line_start.x - WIN_LINE_THICKNESS / 2, line_start.y - WIN_LINE_THICKNESS / 2);
+	win_line[1].position = sf::Vector2f(line_start.x + WIN_LINE_THICKNESS / 2, line_start.y + WIN_LINE_THICKNESS / 2);
+	win_line[2].position = sf::Vector2f(line_end.x - WIN_LINE_THICKNESS / 2, line_end.y - WIN_LINE_THICKNESS / 2);
+	win_line[3].position = sf::Vector2f(line_end.x + WIN_LINE_THICKNESS / 2, line_end.y + WIN_LINE_THICKNESS / 2);
+
+	win_line[0].color = win_line[1].color = win_line[2].color = win_line[3].color = sf::Color(80, 80, 240);
 }
 
 void ResultDisplay::clear_win_line()
 {
-	win_line = nullptr;
+	win_line[0].position = win_line[1].position = win_line[2].position = win_line[3].position = sf::Vector2f(0, 0);
 }

@@ -49,6 +49,7 @@ private:
 
 	sf::Text* displayed_text;
 
-	sf::RectangleShape* win_line = nullptr;
+//	sf::RectangleShape* win_line = nullptr;
 
+	sf::Vertex win_line[4];
 };

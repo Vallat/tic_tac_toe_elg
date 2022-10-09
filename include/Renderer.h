@@ -25,7 +25,7 @@ public:
 	/// </summary>
 	void window_draw(sf::Sprite sprite_to_draw);
 	void window_draw(sf::Text text_to_draw);
-	void window_draw(sf::RectangleShape shape_to_draw);
+	void window_draw(sf::Vertex vertex_to_draw[]);
 
 	/// <summary>
 	/// Is used for displaying everything that was passed to the display window with window_draw()
